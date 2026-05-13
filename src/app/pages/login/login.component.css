@@ -1,0 +1,34 @@
+.text-primary { color: #FF385C !important; }
+.bg-primary { background-color: #FF385C !important; }
+.focus\:ring-primary:focus { --tw-ring-color: #FF385C !important; }
+
+.login-page {
+    min-height: calc(100vh - 88px);
+}
+
+.rounded-4 {
+    border-radius: 1.5rem !important;
+}
+
+.rounded-pill {
+    border-radius: 50rem !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.fixed {
+    position: fixed;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-collapse.show {
+        display: block !important;
+        background: white;
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+        margin-top: 15px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+}

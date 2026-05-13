@@ -15,13 +15,19 @@ export class AuthService {
   ) { }
 
   login(credentials: { login: string; password: string }): Observable<any> {
-    // Removendo os headers manuais para o Angular gerenciar o Content-Type sozinho
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
         if (response.token && isPlatformBrowser(this.platformId)) {
           localStorage.setItem('token', response.token);
+          if (response.role) {
+            localStorage.setItem('role', response.role);
+          }
         }
       })
     );
+  }
+
+  register(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register`, userData);
   }
 }
