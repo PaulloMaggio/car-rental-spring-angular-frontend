@@ -47,7 +47,7 @@ export class LoginComponent {
             this.router.navigate(['/alugar']);
           }
         },
-        error: (err: any) => {
+        error: () => {
           this.message = "Erro ao realizar login. Verifique suas credenciais.";
         }
       });
@@ -59,11 +59,11 @@ export class LoginComponent {
       this.authService.register(this.registerData).subscribe({
         next: () => {
           this.showRegisterModal = false;
-          this.message = "Cadastro realizado com sucesso! Faça login.";
+          alert("Cadastro realizado com sucesso!");
+          this.email = this.registerData.login;
           this.registerData = { nome: '', login: '', password: '' };
         },
         error: (err: any) => {
-          console.error(err);
           alert("Erro ao cadastrar usuário.");
         }
       });

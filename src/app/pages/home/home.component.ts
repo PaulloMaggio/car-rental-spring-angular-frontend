@@ -62,6 +62,11 @@ export class HomeComponent implements OnInit {
     return this.authService.isLoggedIn();
   }
 
+  logout() {
+    this.authService.logout();
+    this.closeMenu();
+  }
+
   goToDashboard() {
     this.router.navigate(['/dashboard']);
     this.closeMenu();
@@ -99,8 +104,13 @@ export class HomeComponent implements OnInit {
   confirmRental() {
     const userId = this.authService.getUserId();
     
+    if (!userId) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     if (!this.rentalForm.startDate || !this.rentalForm.endDate || !this.selectedCar?.id) {
-      alert("Preencha todos os dados.");
+      alert("Selecione as datas corretamente.");
       return;
     }
 
@@ -113,7 +123,7 @@ export class HomeComponent implements OnInit {
 
     this.rentalService.create(payload).subscribe({
       next: () => {
-        alert('Reserva confirmada!');
+        alert('Reserva confirmada! Verifique seu e-mail.');
         this.closeModal();
         this.loadCars();
       },
