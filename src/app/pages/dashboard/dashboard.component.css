@@ -1,33 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@400;600&display=swap');
+
+:host {
+  --bg-vintage: #f4ebd9;
+  --maroon-dark: #5c1d1d;
+  --gold: #c5a059;
+  --border-sepia: #d7caaf;
+  --text-dark: #2b251d;
+}
+
 .container {
   max-width: 1300px;
 }
 
 .table-responsive {
   border-radius: 15px;
-  background-color: white;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  background-color: #fcf9f2;
+  border: 2px solid var(--border-sepia);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
 .table thead th {
-  background-color: #f8f9fa;
-  border-bottom: 2px solid #dee2e6;
+  font-family: 'Cinzel', serif;
+  background-color: rgba(215, 202, 175, 0.4) !important;
+  color: var(--maroon-dark);
+  border-bottom: 3px solid var(--border-sepia);
   white-space: nowrap;
+  font-weight: 800;
 }
 
 .table tbody td {
-  padding: 1rem;
+  padding: 1.2rem 1rem;
   vertical-align: middle;
+  border-bottom: 1px solid var(--border-sepia);
+  color: var(--text-dark);
 }
 
-@media (max-width: 768px) {
-  .btn-sm {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.75rem;
-  }
-  
-  .navbar-brand {
-    font-size: 1.2rem;
-  }
+.table tbody tr:hover {
+  background-color: rgba(197, 160, 89, 0.1) !important;
 }
 
 .spin {
@@ -38,4 +47,16 @@
 @keyframes rotate {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .navbar-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+  }
 }

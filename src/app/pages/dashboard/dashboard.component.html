@@ -7,15 +7,21 @@
 
 <div class="container py-5">
   <ul class="nav nav-tabs mb-4">
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="activeTab === 'cars'" (click)="switchTab('cars')" href="#">Veículos</a>
+    <li class="nav-item" *ngIf="getUserRole() === 'MANAGER'">
+      <a class="nav-link" 
+         [class.active]="activeTab === 'cars'" 
+         (click)="switchTab('cars')" 
+         style="cursor: pointer;">Veículos</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" [class.active]="activeTab === 'rentals'" (click)="switchTab('rentals')" href="#">Reservas</a>
+      <a class="nav-link" 
+         [class.active]="activeTab === 'rentals'" 
+         (click)="switchTab('rentals')" 
+         style="cursor: pointer;">Reservas</a>
     </li>
   </ul>
 
-  <div *ngIf="activeTab === 'cars'">
+  <div *ngIf="activeTab === 'cars' && getUserRole() === 'MANAGER'">
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
       <div>
         <h2 class="fw-bold m-0">Gestão de Frota</h2>
@@ -92,6 +98,9 @@
             <td>{{ rental.endDate | date:'dd/MM/yyyy' }}</td>
             <td class="fw-bold text-primary">{{ rental.totalValue | currency:'BRL' }}</td>
             <td class="text-end">
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="prepareEditRental(rental)" data-bs-toggle="modal" data-bs-target="#editRentalModal">
+                <i class="bi bi-pencil"></i> Editar
+              </button>
               <button class="btn btn-sm btn-outline-danger" (click)="deleteRental(rental.id)">
                 <i class="bi bi-x-circle"></i> Cancelar
               </button>
@@ -144,6 +153,32 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary" (click)="saveCar()" data-bs-dismiss="modal">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editRentalModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow rounded-4">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title fw-bold">Alterar Datas da Reserva</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4" *ngIf="selectedRental">
+        <p>Veículo: <strong>{{ selectedRental.car?.brand }} {{ selectedRental.car?.model }}</strong></p>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Nova Data de Retirada</label>
+          <input type="date" class="form-control" [(ngModel)]="selectedRental.startDate" name="rentalStartDate">
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Nova Data de Devolução</label>
+          <input type="date" class="form-control" [(ngModel)]="selectedRental.endDate" name="rentalEndDate">
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary rounded-pill px-4" (click)="saveRentalUpdate()" data-bs-dismiss="modal">Salvar Alterações</button>
       </div>
     </div>
   </div>

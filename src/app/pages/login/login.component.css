@@ -1,34 +1,88 @@
-.text-primary { color: #FF385C !important; }
-.bg-primary { background-color: #FF385C !important; }
-.focus\:ring-primary:focus { --tw-ring-color: #FF385C !important; }
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@400;600&display=swap');
 
-.login-page {
-    min-height: calc(100vh - 88px);
+:host {
+  --bg-vintage: #f4ebd9;
+  --maroon-dark: #5c1d1d;
+  --gold: #c5a059;
+  --text-dark: #2b251d;
+  --border-sepia: #d7caaf;
 }
 
-.rounded-4 {
-    border-radius: 1.5rem !important;
+.login-page {
+  min-height: calc(100vh - 88px);
+  background-color: var(--bg-vintage);
+  background-image: radial-gradient(rgba(43, 37, 29, 0.05) 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  background-color: #fcf9f2;
+  border: 3px solid var(--gold) !important;
+  border-radius: 1.5rem !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-family: 'Cinzel', serif;
+  color: var(--maroon-dark);
+  font-weight: 800;
+  text-align: center;
+}
+
+.text-primary {
+  color: var(--maroon-dark) !important;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
+
+.bg-primary {
+  background-color: var(--maroon-dark) !important;
+  border-color: var(--gold) !important;
+}
+
+.btn-primary {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 0.8rem;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  filter: brightness(90%);
+  transform: scale(1.02);
+}
+
+.form-control {
+  background-color: #fcf9f2;
+  border: 2px solid var(--border-sepia);
+  border-radius: 0.8rem;
+}
+
+.form-control:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 0.25rem rgba(197, 160, 89, 0.2);
 }
 
 .rounded-pill {
-    border-radius: 50rem !important;
+  border-radius: 50rem !important;
 }
 
 .navbar-toggler:focus {
-    box-shadow: none;
-}
-
-.fixed {
-    position: fixed;
+  box-shadow: none;
 }
 
 @media (max-width: 991.98px) {
-    .navbar-collapse.show {
-        display: block !important;
-        background: white;
-        padding: 1.5rem;
-        border-radius: 1.5rem;
-        margin-top: 15px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-    }
+  .navbar-collapse.show {
+    display: block !important;
+    background: var(--bg-vintage);
+    padding: 1.5rem;
+    border: 2px solid var(--gold);
+    border-radius: 1.5rem;
+    margin-top: 15px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  }
 }

@@ -33,6 +33,10 @@ export class RentalService {
     return this.http.get<any[]>(`${this.apiUrl}/client/${clientId}`, { headers: this.getHeaders() });
   }
 
+  update(id: string, rentalData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, rentalData, { headers: this.getHeaders() });
+  }
+
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }

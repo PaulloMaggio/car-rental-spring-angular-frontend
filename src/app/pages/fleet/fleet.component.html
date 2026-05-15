@@ -1,18 +1,29 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-3">
   <div class="container">
-    <a class="navbar-brand fw-bold d-flex align-items-center text-primary fs-3" routerLink="/home">
-      <i class="bi bi-car-front-fill me-2"></i> PAULO MOTOR'S
+    <a class="navbar-brand fw-bold d-flex align-items-center text-white fs-3" routerLink="/home">
+      <i class="bi bi-car-front-fill me-2 text-white"></i> PAULO MOTOR'S
     </a>
-    <button class="navbar-toggler border-0" type="button" (click)="toggleMenu()">
-      <span class="navbar-toggler-icon"></span>
+
+    <button class="navbar-toggler border-0 text-white" type="button" (click)="toggleMenu()">
+      <i class="bi" [ngClass]="isMenuOpen ? 'bi-x-lg' : 'bi-list'" style="font-size: 1.8rem; color: white;"></i>
     </button>
-    <div class="collapse navbar-collapse" [class.show]="isMenuOpen">
-      <ul class="navbar-nav ms-auto align-items-center gap-lg-3">
-        <li class="nav-item"><a class="nav-link fw-semibold" routerLink="/home">Home</a></li>
-        <li class="nav-item"><a class="nav-link fw-semibold active" routerLink="/frota">Frota</a></li>
+
+    <div class="custom-navbar-collapse" [class.active]="isMenuOpen">
+      <ul class="navbar-nav ms-auto align-items-center gap-4">
         <li class="nav-item">
-          <a *ngIf="!isLoggedIn()" routerLink="/login" class="btn btn-outline-dark rounded-pill px-4">Entrar</a>
-          <button *ngIf="isLoggedIn()" (click)="goToDashboard()" class="btn btn-primary rounded-pill px-4">Minha Conta</button>
+          <a class="nav-link fw-semibold text-white" routerLink="/home" (click)="closeMenu()">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-semibold active text-white" routerLink="/frota" (click)="closeMenu()">Frota</a>
+        </li>
+        <li class="nav-item d-flex gap-2">
+          <ng-container *ngIf="!isLoggedIn()">
+            <a routerLink="/login" class="btn btn-outline-light rounded-pill px-4" (click)="closeMenu()">Acessar</a>
+          </ng-container>
+          <ng-container *ngIf="isLoggedIn()">
+            <button (click)="goToDashboard()" class="btn btn-primary rounded-pill px-4">Minha Conta</button>
+            <button (click)="logout()" class="btn btn-outline-danger rounded-pill px-4">Sair</button>
+          </ng-container>
         </li>
       </ul>
     </div>
@@ -59,31 +70,26 @@
   </div>
 </section>
 
-<!-- Modal de Reserva -->
 <div class="modal fade" id="rentalModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content border-0 shadow rounded-4">
       <div class="modal-header bg-dark text-white border-0">
         <h5 class="modal-title fw-bold">Agendar Reserva</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        <button type="button" class="btn-close btn-close-white" (click)="closeModal()"></button>
       </div>
       <div class="modal-body p-4">
         <p *ngIf="selectedCar"><strong>{{ selectedCar.brand }} {{ selectedCar.model }}</strong></p>
-        
         <div class="mb-3">
           <label class="form-label fw-bold">Início do Aluguel</label>
-          <input type="date" class="form-control" [(ngModel)]="rentalForm.startDate">
+          <input type="date" class="form-control" [(ngModel)]="rentalForm.startDate" [min]="getTodayDate()">
         </div>
         <div class="mb-3">
           <label class="form-label fw-bold">Data de Devolução</label>
-          <input type="date" class="form-control" [(ngModel)]="rentalForm.endDate">
+          <input type="date" class="form-control" [(ngModel)]="rentalForm.endDate" [min]="getTomorrowDate()">
         </div>
       </div>
       <div class="modal-footer border-0">
-        <button class="btn btn-dark w-100 rounded-pill py-3 fw-bold" 
-                (click)="confirmRental()">
-          Confirmar Reserva
-        </button>
+        <button class="btn btn-dark w-100 rounded-pill py-3 fw-bold" (click)="confirmRental()">Confirmar Reserva</button>
       </div>
     </div>
   </div>

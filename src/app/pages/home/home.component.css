@@ -1,13 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@400;600&display=swap');
+
+:host {
+  --bg-vintage: #f4ebd9;
+  --maroon-dark: #5c1d1d;
+  --gold: #c5a059;
+  --border-sepia: #d7caaf;
+}
+
 .hero-vintage {
-  background-color: #fdfdfd;
-  background-image: radial-gradient(#d1d5db 0.5px, transparent 0.5px);
+  background-color: var(--bg-vintage);
+  background-image: radial-gradient(rgba(43, 37, 29, 0.1) 0.5px, transparent 0.5px);
   background-size: 30px 30px;
   min-height: 85vh;
+  padding-top: 5rem;
+}
+
+.display-4 {
+  font-family: 'Cinzel', serif;
+  color: var(--maroon-dark);
+  font-weight: 800;
 }
 
 .floating-img {
   max-width: 85%;
-  filter: drop-shadow(0 25px 35px rgba(0,0,0,0.15));
+  filter: drop-shadow(0 25px 35px rgba(0,0,0,0.3));
   animation: float 5s ease-in-out infinite;
 }
 
@@ -16,46 +32,48 @@
   50% { transform: translateY(-20px); }
 }
 
-.car-vintage-card {
+.car-card, .car-vintage-card {
+  background-color: #fcf9f2 !important;
+  border: 2px solid var(--border-sepia) !important;
+  border-radius: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid #f0f0f0 !important;
 }
 
-.car-vintage-card:hover {
+.car-card:hover, .car-vintage-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08) !important;
+  box-shadow: 0 15px 30px rgba(92, 29, 29, 0.15) !important;
+  border-color: var(--gold) !important;
 }
 
-.custom-navbar-collapse {
-  display: flex;
-  align-items: center;
-  flex-grow: 1;
+.navbar {
+  background-color: var(--maroon-dark) !important;
+  border-bottom: 4px solid var(--gold);
+  z-index: 1030;
 }
 
-@media (max-width: 991px) {
-  .custom-navbar-collapse {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: white;
-    flex-direction: column;
-    padding: 2rem;
-    box-shadow: 0 10px 15px rgba(0,0,0,0.05);
-    z-index: 1050;
-  }
+.badge {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 0.5em 1em;
+}
 
-  .custom-navbar-collapse.active {
-    display: flex;
-  }
+.btn-primary {
+  background-color: var(--maroon-dark) !important;
+  border: 2px solid var(--gold) !important;
+  font-family: 'Cinzel', serif;
+  padding: 0.6rem 1.5rem;
+  transition: all 0.3s;
+}
 
-  .navbar-nav {
-    width: 100%;
-    text-align: center;
-  }
+.btn-primary:hover {
+  filter: brightness(90%);
+  transform: scale(1.02);
+}
 
-  .nav-item {
-    margin-bottom: 1rem;
+@media (max-width: 768px) {
+  .display-4 {
+    font-size: 2.5rem;
   }
 }

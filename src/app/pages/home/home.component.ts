@@ -64,7 +64,8 @@ export class HomeComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    this.closeMenu();
+    this.isMenuOpen = false;
+    this.router.navigate(['/home']);
   }
 
   goToDashboard() {
@@ -103,7 +104,6 @@ export class HomeComponent implements OnInit {
 
   confirmRental() {
     const userId = this.authService.getUserId();
-    
     if (!userId) {
       this.router.navigate(['/login']);
       return;

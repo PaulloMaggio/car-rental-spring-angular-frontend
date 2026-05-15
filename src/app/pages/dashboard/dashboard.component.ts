@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
   isEditing = false;
   activeTab: string = 'cars';
   carForm: Car = this.getEmptyCar();
+  selectedRental: any = null;
 
   constructor(
     private carService: CarService,
@@ -31,6 +32,10 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const role = this.getUserRole();
+    if (role !== 'MANAGER') {
+      this.activeTab = 'rentals';
+    }
     this.loadCars();
     this.loadRentals();
   }
@@ -68,12 +73,18 @@ export class DashboardComponent implements OnInit {
     
     if (role === 'MANAGER') {
       this.rentalService.findAll().subscribe({
-        next: (res) => this.rentals = res,
+        next: (res) => {
+          this.rentals = res;
+          this.cdr.detectChanges();
+        },
         error: (err) => console.error(err)
       });
     } else if (userId) {
       this.rentalService.findByClient(userId).subscribe({
-        next: (res) => this.rentals = res,
+        next: (res) => {
+          this.rentals = res;
+          this.cdr.detectChanges();
+        },
         error: (err) => console.error(err)
       });
     }
@@ -109,6 +120,38 @@ export class DashboardComponent implements OnInit {
     this.carService.delete(id).subscribe(() => this.loadCars());
   }
 
+  prepareEditRental(rental: any) {
+    this.selectedRental = { 
+      ...rental,
+      startDate: rental.startDate.split('T')[0],
+      endDate: rental.endDate.split('T')[0]
+    };
+    this.cdr.detectChanges();
+  }
+
+  saveRentalUpdate() {
+    if (!this.selectedRental) return;
+
+    const payload = {
+      startDate: new Date(this.selectedRental.startDate + 'T12:00:00Z').toISOString(),
+      endDate: new Date(this.selectedRental.endDate + 'T12:00:00Z').toISOString(),
+      carId: this.selectedRental.car.id,
+      clientId: this.selectedRental.client.id
+    };
+
+    this.rentalService.update(this.selectedRental.id, payload).subscribe({
+      next: () => {
+        alert('Reserva atualizada com sucesso!');
+        this.loadRentals();
+        this.selectedRental = null;
+      },
+      error: (err) => {
+        console.error(err);
+        alert(err.error?.message || 'Erro ao atualizar reserva.');
+      }
+    });
+  }
+
   deleteRental(id: string | undefined) {
     if (!id || !confirm('Deseja cancelar esta reserva?')) return;
     this.rentalService.delete(id).subscribe(() => {
@@ -120,6 +163,7 @@ export class DashboardComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['/home']);
   }
 
   resetForm() {
@@ -133,6 +177,7 @@ export class DashboardComponent implements OnInit {
     if (tab === 'rentals') {
       this.loadRentals();
     }
+    this.cdr.detectChanges();
   }
 
   getUserRole(): string | null {
