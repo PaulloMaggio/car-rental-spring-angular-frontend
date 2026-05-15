@@ -1,42 +1,42 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-3">
   <div class="container">
-    <a class="navbar-brand fw-bold d-flex align-items-center text-primary fs-3" routerLink="/home">
-      <i class="bi bi-car-front-fill me-2"></i>
-      PAULO MOTOR'S
+    <a class="navbar-brand fw-bold d-flex align-items-center text-dark fs-3" routerLink="/home">
+      <i class="bi bi-car-front-fill me-2 text-primary"></i> PAULO MOTOR'S
     </a>
 
-    <button class="navbar-toggler" type="button" (click)="toggleMenu()">
-      <span class="navbar-toggler-icon"></span>
+    <button class="navbar-toggler border-0" type="button" (click)="toggleMenu()">
+      <i class="bi" [ngClass]="isMenuOpen ? 'bi-x-lg' : 'bi-list'" style="font-size: 1.8rem;"></i>
     </button>
 
-    <div class="mobile-menu" [class.show]="isMenuOpen">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="#frota" (click)="closeMenu()">Carros</a></li>
-        <li class="nav-item"><a class="nav-link" href="#como-alugar" (click)="closeMenu()">Como Alugar</a></li>
-        <li class="nav-item"><a class="nav-link" href="#sobre" (click)="closeMenu()">Sobre Nós</a></li>
-        
-        <li class="nav-item mt-3">
-          <a class="btn btn-outline-dark rounded-pill px-4 w-100" routerLink="/login" (click)="closeMenu()">Entrar</a>
+    <div class="custom-navbar-collapse" [class.active]="isMenuOpen">
+      <ul class="navbar-nav ms-auto align-items-center gap-4">
+        <li class="nav-item">
+          <a class="nav-link fw-semibold" routerLink="/frota" (click)="closeMenu()">Coleção</a>
         </li>
-        <li class="nav-item mt-2">
-          <a class="btn btn-primary rounded-pill px-4 w-100" routerLink="/alugar" (click)="closeMenu()">Alugar Carro</a>
+        <li class="nav-item">
+          <a class="nav-link fw-semibold" href="#" (click)="scrollToSection('sobre', $event)">Sobre Nós</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="!isLoggedIn()" routerLink="/login" class="btn btn-outline-dark rounded-pill px-4" (click)="closeMenu()">Acessar</a>
+          <button *ngIf="isLoggedIn()" (click)="goToDashboard()" class="btn btn-primary rounded-pill px-4">Minha Conta</button>
         </li>
       </ul>
     </div>
   </div>
 </nav>
 
-<section class="hero-section d-flex align-items-center text-center text-lg-start">
+<section class="hero-vintage d-flex align-items-center py-5">
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-lg-6">
-        <h1 class="display-3 fw-bold mb-4">Alugue o carro ideal<br>para sua jornada</h1>
-        <p class="lead text-muted mb-5">Frota moderna, preços transparentes e atendimento rápido em Ribeirão Preto e região.</p>
-        
+      <div class="col-lg-6 text-center text-lg-start">
+        <h1 class="display-3 fw-bold mb-4 text-dark">Clássicos que contam <span class="text-primary">histórias.</span></h1>
+        <p class="lead mb-5 text-muted">A maior curadoria de veículos vintage da região de Ribeirão Preto.</p>
         <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
-          <a href="#frota" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-semibold">Ver Frota Disponível</a>
-          <a routerLink="/alugar" class="btn btn-outline-dark btn-lg px-5 py-3 rounded-pill fw-semibold">Alugar Agora</a>
+          <a routerLink="/frota" class="btn btn-dark btn-lg px-5 py-3 rounded-pill fw-bold">Explorar Acervo</a>
         </div>
+      </div>
+      <div class="col-lg-6 mt-5 mt-lg-0 text-center">
+        <img src="assets/img/logo-paulo-motors.png.png" alt="Paulo Motors" class="img-fluid floating-img">
       </div>
     </div>
   </div>
@@ -44,35 +44,24 @@
 
 <section id="frota" class="py-5 bg-light">
   <div class="container">
-    <div class="d-flex justify-content-between align-items-end mb-5">
-      <div>
-        <h2 class="fw-bold display-5">Nossa Frota</h2>
-        <p class="text-muted">Escolha entre nossos veículos premium</p>
-      </div>
-    </div>
-
-    <div class="row g-4">
-      <div *ngFor="let car of cars" class="col-md-6 col-lg-4">
-        <div class="car-card h-100">
-          <div class="img-container position-relative">
-            <img [src]="car.image_url" [alt]="car.brand + ' ' + car.model">
-            <span class="badge-status">{{ car.status }}</span>
+    <h2 class="fw-bold display-5 text-center mb-5">Relíquias Disponíveis</h2>
+    <div class="row g-4 justify-content-center">
+      <div *ngFor="let car of cars" class="col-12 col-sm-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm rounded-4 car-vintage-card">
+          <div class="position-relative">
+            <img [src]="car.imageUrl" class="card-img-top" style="height: 220px; object-fit: cover;">
+            <span class="badge position-absolute top-0 end-0 m-3 fs-6 px-3 py-2"
+                  [ngClass]="car.status === 'AVAILABLE' ? 'bg-success' : 'bg-danger'">
+              {{ car.status === 'AVAILABLE' ? 'Disponível' : 'Alugado' }}
+            </span>
           </div>
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-              <div>
-                <h5 class="fw-bold mb-1">{{ car.brand }} {{ car.model }}</h5>
-                <p class="text-muted small mb-2">{{ car.color }} • {{ car.motor }}</p>
-              </div>
-              <span class="text-warning"><i class="bi bi-star-fill"></i> 4.9</span>
+          <div class="card-body p-4 d-flex flex-column">
+            <h5 class="fw-bold text-dark">{{ car.brand }} {{ car.model }}</h5>
+            <p class="text-muted small mb-3">{{ car.motor }} • {{ car.color }}</p>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <span class="fw-bold fs-4 text-primary">{{ car.pricePerDay | currency:'BRL' }}</span>
+              <button class="btn btn-dark rounded-pill px-4" (click)="prepareRental(car)">Reservar</button>
             </div>
-            
-            <div class="price mt-3">
-              <span class="fw-bold fs-3 text-primary">{{ car.price_per_day | currency:'BRL' }}</span>
-              <small class="text-muted">/dia</small>
-            </div>
-
-            <button class="btn btn-dark w-100 mt-4 py-3 rounded-pill fw-semibold">Reservar</button>
           </div>
         </div>
       </div>
@@ -80,11 +69,42 @@
   </div>
 </section>
 
-<section id="sobre" class="py-5">
+<section id="sobre" class="py-5 bg-white border-top">
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-lg-6">
-        <img src="assets/img/image.jpg" alt="Paulo Motor's" class="img-fluid rounded-4 shadow">
+      <div class="col-lg-6 mb-4 mb-lg-0 text-center">
+        <i class="bi bi-shield-check text-primary" style="font-size: 5rem;"></i>
+        <h2 class="fw-bold mt-3">20 Anos de Paixão</h2>
       </div>
-      <div class="col-lg-5 offset-lg-1">
-        <h2 class="fw-bold display-5 mb-4">Sobre a Paulo Motor's</h2>
+      <div class="col-lg-6">
+        <h3 class="fw-bold mb-4">Nossa História</h3>
+        <p class="text-muted lead">Especialistas em restauração e aluguel de carros que marcaram gerações.</p>
+        <p class="text-muted">Nossa missão em Barrinha e região é manter viva a cultura automotiva clássica com segurança e originalidade.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="rentalModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow rounded-4">
+      <div class="modal-header bg-dark text-white border-0">
+        <h5 class="modal-title fw-bold">Agendar Passeio</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="mb-3">
+          <label class="form-label fw-bold">Data de Retirada</label>
+          <input type="date" class="form-control" [(ngModel)]="rentalForm.startDate" [min]="getTodayDate()">
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Data de Devolução</label>
+          <input type="date" class="form-control" [(ngModel)]="rentalForm.endDate" [min]="getTomorrowDate()">
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-dark w-100 rounded-pill py-3 fw-bold" (click)="confirmRental()">Confirmar Reserva</button>
+      </div>
+    </div>
+  </div>
+</div>

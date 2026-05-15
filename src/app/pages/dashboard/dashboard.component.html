@@ -1,0 +1,150 @@
+<nav class="navbar navbar-dark bg-dark px-4 py-3">
+  <div class="container-fluid">
+    <span class="navbar-brand fw-bold">PAULO MOTOR'S ADMIN</span>
+    <button class="btn btn-danger btn-sm rounded-pill px-4" (click)="logout()">Sair</button>
+  </div>
+</nav>
+
+<div class="container py-5">
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="activeTab === 'cars'" (click)="switchTab('cars')" href="#">Veículos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="activeTab === 'rentals'" (click)="switchTab('rentals')" href="#">Reservas</a>
+    </li>
+  </ul>
+
+  <div *ngIf="activeTab === 'cars'">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+      <div>
+        <h2 class="fw-bold m-0">Gestão de Frota</h2>
+        <p class="text-muted m-0">Administre seus veículos cadastrados.</p>
+      </div>
+      <button class="btn btn-primary rounded-pill px-4 py-2" data-bs-toggle="modal" data-bs-target="#carModal" (click)="resetForm()">
+        <i class="bi bi-plus-lg me-2"></i> Novo Veículo
+      </button>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover m-0">
+        <thead>
+          <tr>
+            <th>Veículo</th>
+            <th>Cor / Motor</th>
+            <th>Status</th>
+            <th>Valor Diária</th>
+            <th class="text-end">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let car of cars">
+            <td>
+              <div class="d-flex align-items-center gap-3">
+                <img [src]="car.imageUrl" class="rounded-3" style="width: 60px; height: 40px; object-fit: cover;">
+                <span class="fw-bold">{{ car.brand }} {{ car.model }}</span>
+              </div>
+            </td>
+            <td>{{ car.color }} • {{ car.motor }}</td>
+            <td>
+              <span class="badge rounded-pill" [ngClass]="car.status === 'AVAILABLE' ? 'bg-success' : 'bg-danger'">
+                {{ car.status === 'AVAILABLE' ? 'Disponível' : 'Alugado' }}
+              </span>
+            </td>
+            <td class="fw-bold text-primary">{{ car.pricePerDay | currency:'BRL' }}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="prepareEdit(car)" data-bs-toggle="modal" data-bs-target="#carModal">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteCar(car.id)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="activeTab === 'rentals'">
+    <div class="mb-4">
+      <h2 class="fw-bold m-0">Reservas</h2>
+      <p class="text-muted m-0">Gerencie as reservas realizadas.</p>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover m-0">
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Veículo</th>
+            <th>Data Retirada</th>
+            <th>Data Devolução</th>
+            <th>Valor Total</th>
+            <th class="text-end">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rental of rentals">
+            <td>{{ rental.client?.name || 'Cliente' }}</td>
+            <td>{{ rental.car?.brand }} {{ rental.car?.model }}</td>
+            <td>{{ rental.startDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ rental.endDate | date:'dd/MM/yyyy' }}</td>
+            <td class="fw-bold text-primary">{{ rental.totalValue | currency:'BRL' }}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteRental(rental.id)">
+                <i class="bi bi-x-circle"></i> Cancelar
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="rentals.length === 0">
+            <td colspan="6" class="text-center text-muted py-4">Nenhuma reserva encontrada</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="carModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ isEditing ? 'Editar Veículo' : 'Novo Veículo' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="saveCar()">
+          <div class="mb-3">
+            <label class="form-label">Marca</label>
+            <input type="text" class="form-control" [(ngModel)]="carForm.brand" name="brand" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Modelo</label>
+            <input type="text" class="form-control" [(ngModel)]="carForm.model" name="model" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Cor</label>
+            <input type="text" class="form-control" [(ngModel)]="carForm.color" name="color" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Motor</label>
+            <input type="text" class="form-control" [(ngModel)]="carForm.motor" name="motor">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Preço por Dia</label>
+            <input type="number" class="form-control" [(ngModel)]="carForm.pricePerDay" name="pricePerDay" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">URL da Imagem</label>
+            <input type="text" class="form-control" [(ngModel)]="carForm.imageUrl" name="imageUrl">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="saveCar()" data-bs-dismiss="modal">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -34,7 +34,14 @@ export class LoginComponent {
     if (this.email && this.password) {
       this.authService.login({ login: this.email, password: this.password }).subscribe({
         next: (res: any) => {
-          if (res.role === 'MANAGER') {
+          const pendingCarId = localStorage.getItem('pendingCarId');
+          const pendingReturnUrl = localStorage.getItem('pendingReturnUrl');
+          
+          if (pendingCarId && pendingReturnUrl) {
+            localStorage.removeItem('pendingCarId');
+            localStorage.removeItem('pendingReturnUrl');
+            this.router.navigate([pendingReturnUrl]);
+          } else if (res.role === 'MANAGER') {
             this.router.navigate(['/dashboard']);
           } else {
             this.router.navigate(['/alugar']);

@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Car } from '../models/car.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CarService {
-  private apiUrl = 'http://localhost:8080/api/v1/cars';
+export class RentalService {
+  private apiUrl = 'http://localhost:8080/api/v1/rentals';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private getHeaders(): HttpHeaders {
     let headers = new HttpHeaders();
@@ -22,16 +21,16 @@ export class CarService {
     return headers;
   }
 
-  findAll(): Observable<Car[]> {
-    return this.http.get<Car[]>(this.apiUrl, { headers: this.getHeaders() });
+  create(rentalData: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, rentalData, { headers: this.getHeaders() });
   }
 
-  save(car: Car): Observable<Car> {
-    return this.http.post<Car>(this.apiUrl, car, { headers: this.getHeaders() });
+  findAll(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl, { headers: this.getHeaders() });
   }
 
-  update(id: string, car: Car): Observable<Car> {
-    return this.http.put<Car>(`${this.apiUrl}/${id}`, car, { headers: this.getHeaders() });
+  findByClient(clientId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/client/${clientId}`, { headers: this.getHeaders() });
   }
 
   delete(id: string): Observable<void> {

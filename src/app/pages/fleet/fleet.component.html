@@ -1,0 +1,90 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-3">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center text-primary fs-3" routerLink="/home">
+      <i class="bi bi-car-front-fill me-2"></i> PAULO MOTOR'S
+    </a>
+    <button class="navbar-toggler border-0" type="button" (click)="toggleMenu()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" [class.show]="isMenuOpen">
+      <ul class="navbar-nav ms-auto align-items-center gap-lg-3">
+        <li class="nav-item"><a class="nav-link fw-semibold" routerLink="/home">Home</a></li>
+        <li class="nav-item"><a class="nav-link fw-semibold active" routerLink="/frota">Frota</a></li>
+        <li class="nav-item">
+          <a *ngIf="!isLoggedIn()" routerLink="/login" class="btn btn-outline-dark rounded-pill px-4">Entrar</a>
+          <button *ngIf="isLoggedIn()" (click)="goToDashboard()" class="btn btn-primary rounded-pill px-4">Minha Conta</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="py-5 bg-light min-vh-100">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h1 class="fw-bold display-5">Nossa Frota Completa</h1>
+      <p class="text-muted lead">Escolha o carro clássico para sua experiência</p>
+    </div>
+
+    <div class="row g-4">
+      <div *ngFor="let car of cars" class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+          <div class="position-relative">
+            <img [src]="car.imageUrl" class="card-img-top" style="height: 240px; object-fit: cover;">
+            <span class="badge position-absolute top-0 end-0 m-3 fs-6 px-3 py-2"
+                  [ngClass]="car.status === 'AVAILABLE' ? 'bg-success' : 'bg-danger'">
+              {{ car.status === 'AVAILABLE' ? 'Disponível' : 'Alugado' }}
+            </span>
+          </div>
+          
+          <div class="card-body p-4">
+            <h5 class="fw-bold mb-1">{{ car.brand }} {{ car.model }}</h5>
+            <p class="text-muted small mb-3">{{ car.motor }} • {{ car.color }}</p>
+            
+            <div class="d-flex justify-content-between align-items-end mt-4">
+              <div>
+                <span class="fs-3 fw-bold text-primary">{{ car.pricePerDay | currency:'BRL' }}</span>
+                <small class="text-muted">/dia</small>
+              </div>
+              <button class="btn btn-dark rounded-pill px-5 fw-bold"
+                      (click)="prepareRental(car)"
+                      [disabled]="car.status !== 'AVAILABLE'">
+                Reservar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal de Reserva -->
+<div class="modal fade" id="rentalModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow rounded-4">
+      <div class="modal-header bg-dark text-white border-0">
+        <h5 class="modal-title fw-bold">Agendar Reserva</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <p *ngIf="selectedCar"><strong>{{ selectedCar.brand }} {{ selectedCar.model }}</strong></p>
+        
+        <div class="mb-3">
+          <label class="form-label fw-bold">Início do Aluguel</label>
+          <input type="date" class="form-control" [(ngModel)]="rentalForm.startDate">
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Data de Devolução</label>
+          <input type="date" class="form-control" [(ngModel)]="rentalForm.endDate">
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button class="btn btn-dark w-100 rounded-pill py-3 fw-bold" 
+                (click)="confirmRental()">
+          Confirmar Reserva
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,6 +5,6 @@ export interface Car {
   color: string;
   motor: string;
   status: string;
-  price_per_day: number;
-  image_url: string;
+  pricePerDay: number;
+  imageUrl: string;
 }

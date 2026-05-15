@@ -19,9 +19,8 @@ export class AuthService {
       tap(response => {
         if (response.token && isPlatformBrowser(this.platformId)) {
           localStorage.setItem('token', response.token);
-          if (response.role) {
-            localStorage.setItem('role', response.role);
-          }
+          localStorage.setItem('role', response.role);
+          localStorage.setItem('userId', response.id);
         }
       })
     );
@@ -29,5 +28,33 @@ export class AuthService {
 
   register(userData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register`, userData);
+  }
+
+  isLoggedIn(): boolean {
+    if (isPlatformBrowser(this.platformId)) {
+      return !!localStorage.getItem('token');
+    }
+    return false;
+  }
+
+  getUserRole(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('role');
+    }
+    return null;
+  }
+
+  getUserId(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('userId');
+    }
+    return null;
+  }
+
+  logout(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.clear();
+      window.location.href = '/login';
+    }
   }
 }
