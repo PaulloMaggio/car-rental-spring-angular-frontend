@@ -7,7 +7,8 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/auth';
+  // Alterado para a URL de produção do Railway com HTTPS
+  private apiUrl = 'https://car-rental-spring-angular-production.up.railway.app/auth';
 
   constructor(
     private http: HttpClient,
