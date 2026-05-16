@@ -1,59 +1,73 @@
-# PauloMotorsFront
+# Paulo Motor's - Sistema de Locação de Veículos Clássicos 🚗✨
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.10.
+O **Paulo Motor's** é uma plataforma desenvolvida para a locação de veículos vintage e clássicos. O sistema oferece uma experiência imersiva para entusiastas de carros antigos, combinando uma interface pública intuitiva de navegação na frota com um painel administrativo completo para controle de estoque, gerenciamento de perfis de acesso e agendamentos de reservas.
 
-## Development server
+---
 
-To start a local development server, run:
+## 📸 Demonstração do Sistema
 
+### 🏠 Visão Geral e Navegação Pública
+
+#### Home Page
+> A maior curadoria de veículos vintage da região de Ribeirão Preto. Uma interface imersiva focada na conversão de novos clientes.
+![Home Page](src/assets/img/telahome.jpg)
+
+#### Catálogo da Frota
+> Exibição em tempo real de carros clássicos disponíveis para locação, com badges dinâmicas de status de disponibilidade.
+![Frota Pública](src/assets/img/telafrota.jpg)
+
+#### Acesso Seguro (Autenticação)
+> Controle de acesso limpo e intuitivo integrado a perfis baseados em regras (Role-Based Access Control).
+![Tela de Login](src/assets/img/telalogin.jpg)
+
+---
+
+### 📊 Painel Administrativo (Manager Dashboard)
+
+#### Gestão de Frota Ativa
+> Listagem gerencial completa exibindo características técnicas detalhadas, valores de diárias e controle de estado do veículo.
+![Dashboard de Veículos](src/assets/img/dashboardveiculos.jpg)
+
+#### Controle Geral de Reservas
+> Auditoria e monitoramento de datas de retirada, devolução e cálculo automatizado do valor total faturado por locação.
+![Dashboard de Reservas](src/assets/img/dashboardreserva.jpg)
+
+---
+
+## 🛠️ Tecnologias e Arquitetura Frontend
+
+A aplicação foi estruturada utilizando práticas modernas do ecossistema de desenvolvimento web, priorizando performance, forte tipagem, componentização e desacoplamento de código:
+
+* **TypeScript**: Utilização integral da linguagem para garantir tipagem estática forte, interfaces de dados consistentes (Models) e prevenção de erros em tempo de compilação, elevando a confiabilidade do código.
+* **Angular 17+ (Stand-alone Components)**: Arquitetura limpa sem a necessidade de declaração modular pesada em `NgModule`.
+* **Controle de Estado Reativo (RxJS)**: Gerenciamento eficiente de chamadas assíncronas e concorrência aos endpoints da API do ecossistema backend.
+* **Gerenciamento de Formulários Dinâmicos**: Integração bidirecional robusta via `FormsModule` (`[(ngModel)]`) garantindo validação em tempo real e prevenção de payloads corrompidos.
+* **Estilização e Responsividade**: Construído sobre o **Bootstrap 5**, garantindo alinhamentos elegantes, tabelas responsivas e modais de alto padrão visual.
+* **Estratégia de Geração de Bundle**: Configurações otimizadas para o ciclo de desenvolvimento contínuo (Watch Mode).
+
+---
+
+## ⚙️ Regras de Negócio Implementadas no Front
+
+* **Navegação Condicional baseada em Roles (RBAC)**: Abas de administração da frota (`cars`) ficam restritas visivelmente apenas para usuários autenticados com a permissão `MANAGER`. Clientes comuns têm acesso direto ao histórico de locações pessoais.
+* **Tratamento de Ciclos de Vida e Atualização Assíncrona**: Utilização estratégica de `ChangeDetectorRef.detectChanges()` para forçar sincronização de renderizações complexas em modais após requisições HTTP bem-sucedidas.
+* **Manipulação Inteligente de Datas**: Conversão e formatação automática de fusos horários ISO (`Z`) em strings curtas padrão para preenchimento nativo de inputs do tipo HTML5 `date`.
+
+---
+
+## 🚀 Como Executar o Ambiente Local
+
+### Pré-requisitos
+Certifique-se de possuir instalado em sua máquina o [Node.js](https://nodejs.org/).
+
+### 1. Clonar o Repositório
 ```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+git clone [https://github.com/SeuUsuario/paulo-motors-front.git](https://github.com/SeuUsuario/paulo-motors-front.git)
+cd paulo-motors-front
+2. Instalar as Dependências
+Bash
+npm install
+3. Executar o Servidor de Desenvolvimento
+Bash
+npm start
+Após o build terminar com sucesso, a aplicação estará disponível localmente em http://localhost:4200/.

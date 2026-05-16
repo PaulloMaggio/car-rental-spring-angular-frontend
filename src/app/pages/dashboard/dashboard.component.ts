@@ -23,6 +23,15 @@ export class DashboardComponent implements OnInit {
   carForm: Car = this.getEmptyCar();
   selectedRental: any = null;
 
+  motorOptions = [
+    { value: 'MOTOR_1_0', label: '1.0' },
+    { value: 'MOTOR_1_4', label: '1.4' },
+    { value: 'MOTOR_1_6', label: '1.6' },
+    { value: 'MOTOR_2_0', label: '2.0' },
+    { value: 'MOTOR_TURBO', label: 'Turbo' },
+    { value: 'ELECTRIC', label: 'Elétrico' }
+  ];
+
   constructor(
     private carService: CarService,
     private rentalService: RentalService,
@@ -98,7 +107,7 @@ export class DashboardComponent implements OnInit {
   saveCar() {
     if (this.isEditing && this.carForm.id) {
       this.carService.update(this.carForm.id, this.carForm).subscribe({
-        next: () => this.handleSuccess('Veículo atualizado!'),
+        next: () => this.handleSuccess('Veículo updated!'),
         error: (err) => console.error(err)
       });
     } else {

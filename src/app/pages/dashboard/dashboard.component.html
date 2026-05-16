@@ -138,7 +138,11 @@
           </div>
           <div class="mb-3">
             <label class="form-label">Motor</label>
-            <input type="text" class="form-control" [(ngModel)]="carForm.motor" name="motor">
+            <select class="form-select" [(ngModel)]="carForm.motor" name="motor" required>
+              <option *ngFor="let option of motorOptions" [value]="option.value">
+                {{ option.label }}
+              </option>
+            </select>
           </div>
           <div class="mb-3">
             <label class="form-label">Preço por Dia</label>
