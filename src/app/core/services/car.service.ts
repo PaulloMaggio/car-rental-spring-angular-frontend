@@ -7,7 +7,7 @@ import { Car } from '../models/car.model';
   providedIn: 'root'
 })
 export class CarService {
-  private apiUrl = 'http://localhost:8080/api/v1/cars';
+  private apiUrl = 'https://car-rental-spring-angular-production.up.railway.app/api/v1/cars';
 
   constructor(private http: HttpClient) {}
 
