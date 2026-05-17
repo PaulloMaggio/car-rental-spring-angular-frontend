@@ -1,14 +1,29 @@
+<style>
+  .hero-vintage {
+    background-color: #fcf9f2 !important;
+  }
+  @media (max-width: 991.98px) {
+    .custom-navbar-collapse {
+      display: block !important;
+    }
+    .navbar-nav {
+      flex-direction: row !important;
+      justify-content: flex-end;
+    }
+  }
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-3">
   <div class="container">
     <a class="navbar-brand fw-bold d-flex align-items-center text-white fs-3" routerLink="/home">
       <i class="bi bi-car-front-fill me-2 text-white"></i> PAULO MOTOR'S
     </a>
 
-    <button class="navbar-toggler border-0 text-white" type="button" (click)="toggleMenu()">
+    <button class="navbar-toggler border-0 text-white d-none" type="button" (click)="toggleMenu()">
       <i class="bi" [ngClass]="isMenuOpen ? 'bi-x-lg' : 'bi-list'" style="font-size: 1.8rem; color: white;"></i>
     </button>
 
-    <div class="custom-navbar-collapse" [class.active]="isMenuOpen">
+    <div class="custom-navbar-collapse">
       <ul class="navbar-nav ms-auto align-items-center gap-4">
         <li class="nav-item">
           <a class="nav-link fw-semibold text-white" routerLink="/frota" (click)="closeMenu()">Coleção</a>
@@ -84,7 +99,7 @@
       <div class="col-lg-6">
         <h3 class="fw-bold mb-4">Nossa História</h3>
         <p class="text-muted lead">Especialistas em restauração e aluguel de carros que marcaram gerações.</p>
-        <p class="text-muted">Nossa missão em Barrinha e região é manter viva a cultura automotiva clássica com segurança e originalidade.</p>
+        <p class="text-muted">Nossa missão em Ribeirão Preto e região é manter viva a cultura automotiva clássica com segurança e originalidade.</p>
       </div>
     </div>
   </div>

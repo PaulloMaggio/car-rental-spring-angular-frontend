@@ -10,31 +10,32 @@
 
 .login-page {
   min-height: calc(100vh - 88px);
-  background-color: var(--bg-vintage);
+  background-color: var(--bg-vintage) !important;
   background-image: radial-gradient(rgba(43, 37, 29, 0.05) 0.5px, transparent 0.5px);
   background-size: 24px 24px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100% !important;
 }
 
 .card {
-  background-color: #fcf9f2;
+  background-color: #fcf9f2 !important;
   border: 3px solid var(--gold) !important;
   border-radius: 1.5rem !important;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 .card-title {
-  font-family: 'Cinzel', serif;
-  color: var(--maroon-dark);
+  font-family: 'Cinzel', serif !important;
+  color: var(--maroon-dark) !important;
   font-weight: 800;
   text-align: center;
 }
 
 .text-primary {
   color: var(--maroon-dark) !important;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', serif !important;
   font-weight: 700;
 }
 
@@ -44,7 +45,9 @@
 }
 
 .btn-primary {
-  font-family: 'Cinzel', serif;
+  background-color: var(--maroon-dark) !important;
+  border: 2px solid var(--gold) !important;
+  font-family: 'Cinzel', serif !important;
   font-weight: 600;
   letter-spacing: 1px;
   padding: 0.8rem;
@@ -57,32 +60,17 @@
 }
 
 .form-control {
-  background-color: #fcf9f2;
-  border: 2px solid var(--border-sepia);
+  background-color: #fcf9f2 !important;
+  border: 2px solid var(--border-sepia) !important;
   border-radius: 0.8rem;
+  color: var(--text-dark) !important;
 }
 
 .form-control:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 0.25rem rgba(197, 160, 89, 0.2);
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 0.25rem rgba(197, 160, 89, 0.2) !important;
 }
 
 .rounded-pill {
   border-radius: 50rem !important;
-}
-
-.navbar-toggler:focus {
-  box-shadow: none;
-}
-
-@media (max-width: 991.98px) {
-  .navbar-collapse.show {
-    display: block !important;
-    background: var(--bg-vintage);
-    padding: 1.5rem;
-    border: 2px solid var(--gold);
-    border-radius: 1.5rem;
-    margin-top: 15px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-  }
 }

@@ -1,85 +1,71 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-3">
   <div class="container">
-    <a class="navbar-brand fw-bold d-flex align-items-center text-primary fs-3" routerLink="/home">
-      <i class="bi bi-car-front-fill me-2"></i> PAULO MOTOR'S
+    <a class="navbar-brand fw-bold d-flex align-items-center text-dark fs-3" routerLink="/home">
+      <i class="bi bi-car-front-fill me-2 text-dark"></i> PAULO MOTOR'S
     </a>
-    <button class="navbar-toggler border-0" type="button" (click)="toggleMenu()">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" [class.show]="isMenuOpen">
-      <ul class="navbar-nav ms-auto align-items-center gap-lg-3">
-        <li class="nav-item"><a class="nav-link fw-semibold" routerLink="/home">Home</a></li>
-        <li class="nav-item">
-          <a class="btn btn-primary rounded-pill px-4 text-white fw-bold" routerLink="/alugar">Alugar Agora</a>
-        </li>
-      </ul>
-    </div>
   </div>
 </nav>
 
-<div class="login-page bg-light d-flex align-items-center justify-content-center py-5">
-  <div class="max-w-md w-full bg-white p-8 rounded-4 shadow-lg border-0">
-    <div class="text-center mb-6">
-      <h2 class="text-3xl font-bold text-gray-800">Login</h2>
-      <p class="text-muted">Acesse sua conta para continuar</p>
-    </div>
+<div class="login-page">
+  <div class="card p-4 m-3 w-100" style="max-width: 420px;">
+    <div class="card-body text-center p-3">
+      <h2 class="card-title mb-2">Login</h2>
+      <p class="text-muted small mb-4">Acesse sua conta para continuar</p>
 
-    <form (ngSubmit)="onSubmit()">
-      <div class="mb-4">
-        <label class="block text-gray-700 font-semibold mb-2">E-mail</label>
-        <input type="email" name="email" [(ngModel)]="email" required
-               class="w-full px-4 py-3 border rounded-pill focus:outline-none focus:ring-2 focus:ring-primary border-gray-300">
+      <form (ngSubmit)="onSubmit()">
+        <div class="mb-4 text-start">
+          <label class="form-label fw-semibold text-muted small">E-mail</label>
+          <input type="email" name="email" [(ngModel)]="email" required class="form-control rounded-pill px-4 py-3">
+        </div>
+        <div class="mb-4 text-start">
+          <label class="form-label fw-semibold text-muted small">Senha</label>
+          <input type="password" name="password" [(ngModel)]="password" required class="form-control rounded-pill px-4 py-3">
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill py-3 text-white fw-bold shadow-md">
+          Entrar
+        </button>
+      </form>
+
+      <div class="mt-4">
+        <p class="text-muted small mb-0">Ainda não tem uma conta?</p>
+        <button (click)="showRegisterModal = true" class="text-primary font-bold bg-transparent border-0 p-0 mt-1 fs-5">
+          Cadastre-se agora
+        </button>
       </div>
-      <div class="mb-6">
-        <label class="block text-gray-700 font-semibold mb-2">Senha</label>
-        <input type="password" name="password" [(ngModel)]="password" required
-               class="w-full px-4 py-3 border rounded-pill focus:outline-none focus:ring-2 focus:ring-primary border-gray-300">
-      </div>
-      
-      <button type="submit" 
-              class="w-full bg-primary text-white py-3 rounded-pill font-bold hover:opacity-90 transition duration-200 shadow-md">
-        Entrar
-      </button>
-    </form>
 
-    <div class="mt-6 text-center">
-      <p class="text-gray-600">Ainda não tem uma conta?</p>
-      <button (click)="showRegisterModal = true" class="text-primary font-bold hover:underline bg-transparent border-0 p-0">
-        Cadastre-se agora
-      </button>
+      <p *ngIf="message" class="mt-4 text-danger text-center text-sm font-semibold p-2 bg-light rounded-3">
+        {{ message }}
+      </p>
     </div>
-
-    <p *ngIf="message" class="mt-4 text-red-500 text-center text-sm font-semibold bg-red-50 p-2 rounded-3">
-      {{ message }}
-    </p>
   </div>
 </div>
 
-<div *ngIf="showRegisterModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-  <div class="bg-white w-full max-w-md rounded-4 shadow-2xl p-6 relative">
-    <button (click)="showRegisterModal = false" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 border-0 bg-transparent">
-      <i class="bi bi-x-lg fs-5"></i>
-    </button>
-    
-    <h3 class="text-2xl font-bold mb-2">Criar conta</h3>
-    <p class="text-muted mb-6 small">Preencha os dados abaixo para alugar seu carro.</p>
-
-    <form (ngSubmit)="onRegister()">
-      <div class="mb-3">
-        <input type="text" name="regNome" [(ngModel)]="registerData.nome" placeholder="Nome Completo" required
-               class="w-full px-4 py-2 border border-gray-300 rounded-pill focus:ring-2 focus:ring-primary outline-none">
-      </div>
-      <div class="mb-3">
-        <input type="email" name="regLogin" [(ngModel)]="registerData.login" placeholder="E-mail" required
-               class="w-full px-4 py-2 border border-gray-300 rounded-pill focus:ring-2 focus:ring-primary outline-none">
-      </div>
-      <div class="mb-4">
-        <input type="password" name="regPass" [(ngModel)]="registerData.password" placeholder="Senha" required
-               class="w-full px-4 py-2 border border-gray-300 rounded-pill focus:ring-2 focus:ring-primary outline-none">
-      </div>
-      <button type="submit" class="w-full bg-primary text-white py-2 rounded-pill font-bold hover:opacity-90 shadow">
-        Finalizar Cadastro
+<div *ngIf="showRegisterModal" class="modal-backdrop fade show"></div>
+<div *ngIf="showRegisterModal" class="modal d-block tab-modal" tabindex="-1" style="background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-dialog-centered p-3">
+    <div class="modal-content p-4 border-0 rounded-4 shadow-2xl position-relative" style="background-color: #fcf9f2;">
+      <button (click)="showRegisterModal = false" class="position-absolute top-0 end-0 m-3 text-gray-400 hover:text-gray-600 border-0 bg-transparent">
+        <i class="bi bi-x-lg fs-5"></i>
       </button>
-    </form>
+      
+      <h3 class="card-title text-start mb-2" style="font-size: 1.75rem;">Criar conta</h3>
+      <p class="text-muted mb-4 text-start small">Preencha os dados abaixo para alugar seu carro.</p>
+
+      <form (ngSubmit)="onRegister()">
+        <div class="mb-3">
+          <input type="text" name="regNome" [(ngModel)]="registerData.nome" placeholder="Nome Completo" required class="form-control rounded-pill px-4 py-2">
+        </div>
+        <div class="mb-3">
+          <input type="email" name="regLogin" [(ngModel)]="registerData.login" placeholder="E-mail" required class="form-control rounded-pill px-4 py-2">
+        </div>
+        <div class="mb-4">
+          <input type="password" name="regPass" [(ngModel)]="registerData.password" placeholder="Senha" required class="form-control rounded-pill px-4 py-2">
+        </div>
+        <button type="submit" class="btn btn-primary w-100 rounded-pill font-bold text-white shadow">
+          Finalizar Cadastro
+        </button>
+      </form>
+    </div>
   </div>
 </div>

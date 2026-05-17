@@ -4,42 +4,38 @@
   --bg-vintage: #f4ebd9;
   --maroon-dark: #5c1d1d;
   --gold: #c5a059;
+  --text-dark: #2b251d;
   --border-sepia: #d7caaf;
 }
 
-.hero-vintage {
-  background-color: var(--bg-vintage);
-  background-image: radial-gradient(rgba(43, 37, 29, 0.1) 0.5px, transparent 0.5px);
-  background-size: 30px 30px;
-  min-height: 85vh;
-  padding-top: 5rem;
+.fleet-page {
+  background-color: var(--bg-vintage) !important;
+  background-image: radial-gradient(rgba(43, 37, 29, 0.05) 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
 }
 
-.display-4 {
-  font-family: 'Cinzel', serif;
-  color: var(--maroon-dark);
-  font-weight: 800;
+.font-title {
+  font-family: 'Cinzel', serif !important;
+  color: var(--maroon-dark) !important;
 }
 
-.floating-img {
-  max-width: 85%;
-  filter: drop-shadow(0 25px 35px rgba(0,0,0,0.3));
-  animation: float 5s ease-in-out infinite;
+.font-price {
+  font-family: 'Playfair Display', serif !important;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+.navbar-brand {
+  font-family: 'Cinzel', serif !important;
+  letter-spacing: 1px;
 }
 
-.car-card, .car-vintage-card {
+.car-vintage-card {
   background-color: #fcf9f2 !important;
   border: 2px solid var(--border-sepia) !important;
   border-radius: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.car-card:hover, .car-vintage-card:hover {
+.car-vintage-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 15px 30px rgba(92, 29, 29, 0.15) !important;
   border-color: var(--gold) !important;
@@ -49,6 +45,13 @@
   background-color: var(--maroon-dark) !important;
   border-bottom: 4px solid var(--gold);
   z-index: 1030;
+}
+
+.custom-navbar-collapse {
+  display: flex !important;
+  flex-basis: auto;
+  flex-grow: 1;
+  align-items: center;
 }
 
 .badge {
@@ -62,7 +65,7 @@
 .btn-primary {
   background-color: var(--maroon-dark) !important;
   border: 2px solid var(--gold) !important;
-  font-family: 'Cinzel', serif;
+  font-family: 'Cinzel', serif !important;
   padding: 0.6rem 1.5rem;
   transition: all 0.3s;
 }
@@ -72,8 +75,18 @@
   transform: scale(1.02);
 }
 
-@media (max-width: 768px) {
-  .display-4 {
-    font-size: 2.5rem;
-  }
+.form-control {
+  background-color: #fcf9f2 !important;
+  border: 2px solid var(--border-sepia) !important;
+  border-radius: 0.8rem;
+  color: var(--text-dark) !important;
+}
+
+.form-control:focus {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 0.25rem rgba(197, 160, 89, 0.2) !important;
+}
+
+.text-dark {
+  color: var(--text-dark) !important;
 }
