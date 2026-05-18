@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RentalService {
-  private apiUrl = 'http://localhost:8080/api/v1/rentals';
+  private apiUrl = 'https://car-rental-spring-angular-production.up.railway.app/api/v1/rentals';
 
   constructor(private http: HttpClient) { }
 
