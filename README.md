@@ -10,11 +10,11 @@ O **Paulo Motor's** é uma plataforma desenvolvida para a locação de veículos
 
 #### Home Page
 > A maior curadoria de veículos vintage da região de Ribeirão Preto. Uma interface imersiva focada na conversão de novos clientes.
-![Home Page](src/assets/img/telahome.jpg)
+![Home Page](src/assets/img/home.jpg)
 
 #### Catálogo da Frota
 > Exibição em tempo real de carros clássicos disponíveis para locação, com badges dinâmicas de status de disponibilidade.
-![Frota Pública](src/assets/img/telafrota.jpg)
+![Frota Pública](src/assets/img/frota.jpg)
 
 #### Acesso Seguro (Autenticação)
 > Controle de acesso limpo e intuitivo integrado a perfis baseados em regras (Role-Based Access Control).
