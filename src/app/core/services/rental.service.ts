@@ -29,7 +29,7 @@ export class RentalService {
     return this.http.get<any[]>(this.apiUrl, { headers: this.getHeaders() });
   }
 
-  findByClient(clientId: string): Observable<any[]> {
+  findByClientId(clientId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/client/${clientId}`, { headers: this.getHeaders() });
   }
 

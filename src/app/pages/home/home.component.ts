@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { CarService } from '../../core/services/car.service';
@@ -68,11 +69,6 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  goToDashboard() {
-    this.router.navigate(['/dashboard']);
-    this.closeMenu();
-  }
-
   scrollToSection(sectionId: string, event: Event) {
     event.preventDefault();
     const element = document.getElementById(sectionId);
@@ -105,6 +101,7 @@ export class HomeComponent implements OnInit {
   confirmRental() {
     const userId = this.authService.getUserId();
     if (!userId) {
+      alert("Sessão expirada. Faça login novamente.");
       this.router.navigate(['/login']);
       return;
     }
@@ -115,20 +112,28 @@ export class HomeComponent implements OnInit {
     }
 
     const payload = {
-      startDate: new Date(this.rentalForm.startDate + 'T12:00:00Z').toISOString(),
-      endDate: new Date(this.rentalForm.endDate + 'T12:00:00Z').toISOString(),
+      startDate: new Date(this.rentalForm.startDate + 'T12:00:00').toISOString(),
+      endDate: new Date(this.rentalForm.endDate + 'T12:00:00').toISOString(),
       carId: this.selectedCar.id,
       clientId: userId
     };
 
     this.rentalService.create(payload).subscribe({
-      next: () => {
-        alert('Reserva confirmada! Verifique seu e-mail.');
+      next: (response) => {
+        console.log("✅ Reserva criada com sucesso!", response);
         this.closeModal();
-        this.loadCars();
+        alert('✅ Reserva confirmada com sucesso! Verifique seu e-mail.');
+        window.location.reload();
       },
       error: (err) => {
-        alert(err.error?.message || 'Erro ao processar reserva.');
+        console.error("❌ Erro completo:", err);
+        let mensagem = 'Erro ao processar reserva.';
+        if (err.error?.message) mensagem = err.error.message;
+        else if (err.error?.error) mensagem = err.error.error;
+        else if (err.status === 400) mensagem = 'Dados inválidos.';
+        else if (err.status === 401) mensagem = 'Sessão expirada. Faça login novamente.';
+        else if (err.status === 403) mensagem = 'Acesso negado.';
+        alert(mensagem);
       }
     });
   }
@@ -139,6 +144,13 @@ export class HomeComponent implements OnInit {
       const modal = bootstrap.Modal.getInstance(modalElement);
       if (modal) modal.hide();
     }
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) {
+      backdrop.remove();
+    }
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
     this.selectedCar = null;
     this.rentalForm = { startDate: '', endDate: '' };
   }

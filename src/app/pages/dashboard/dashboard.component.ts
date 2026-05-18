@@ -64,12 +64,12 @@ export class DashboardComponent implements OnInit {
   loadCars() {
     this.isRefreshing = true;
     this.carService.findAll().subscribe({
-      next: (res) => {
+      next: (res: any) => {
         this.cars = [...res];
         this.isRefreshing = false;
         this.cdr.detectChanges();
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error(err);
         this.isRefreshing = false;
       }
@@ -82,19 +82,19 @@ export class DashboardComponent implements OnInit {
     
     if (role === 'MANAGER') {
       this.rentalService.findAll().subscribe({
-        next: (res) => {
+        next: (res: any) => {
           this.rentals = res;
           this.cdr.detectChanges();
         },
-        error: (err) => console.error(err)
+        error: (err: any) => console.error(err)
       });
     } else if (userId) {
-      this.rentalService.findByClient(userId).subscribe({
-        next: (res) => {
+      this.rentalService.findByClientId(userId).subscribe({
+        next: (res: any) => {
           this.rentals = res;
           this.cdr.detectChanges();
         },
-        error: (err) => console.error(err)
+        error: (err: any) => console.error(err)
       });
     }
   }
@@ -108,12 +108,12 @@ export class DashboardComponent implements OnInit {
     if (this.isEditing && this.carForm.id) {
       this.carService.update(this.carForm.id, this.carForm).subscribe({
         next: () => this.handleSuccess('Veículo updated!'),
-        error: (err) => console.error(err)
+        error: (err: any) => console.error(err)
       });
     } else {
       this.carService.save(this.carForm).subscribe({
         next: () => this.handleSuccess('Veículo cadastrado!'),
-        error: (err) => console.error(err)
+        error: (err: any) => console.error(err)
       });
     }
   }
@@ -154,7 +154,7 @@ export class DashboardComponent implements OnInit {
         this.loadRentals();
         this.selectedRental = null;
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error(err);
         alert(err.error?.message || 'Erro ao atualizar reserva.');
       }
